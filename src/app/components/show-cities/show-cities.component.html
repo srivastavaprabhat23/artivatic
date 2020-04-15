@@ -1,0 +1,50 @@
+<div class="container">
+  <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+  <div class="row align-items-center justify-content-center">
+    <div class="col col-md-12 ">
+      <!-- state drop down -->
+      <div><label class="text-primary label">List of states</label></div>
+      <div class="dropdown"  (clickOutside)="onClickedOutsideState($event)" >
+          <input (click)="displayStateList()" class="dropbtn" id="selectedState" (keyup)="searchState()"
+          placeholder="Select State" required/>
+          <div id="stateList" class="dropdown-content" *ngIf="stateBox">
+              <span *ngIf="stateLoader" class="d-flex justify-content-center">
+                <div class="spinner-border  text-info align-items-center" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </span>
+              <span *ngIf="!stateLoader">
+                <a (click)="setState(state)" *ngFor="let state of states " class="stateItem text-info">{{state}}</a>
+              </span>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row align-items-center justify-content-center">
+    <div class="col col-lg-6">
+      <!-- City drop down -->
+      <div><label class="text-primary label">List of cities</label></div>
+      <div class="cityDropdown" (clickOutside)="onClickedOutsideCity($event)">
+          <input (click)="displayCityList()" class="cityDropbtn" id="selectedCity" (keyup)="searchCity()"
+          placeholder="Select City" required>
+          <div id="cityList" class="cityDropdown-content"  *ngIf="cityBox">
+            <span *ngIf="cityLoader" class="d-flex justify-content-center">
+              <div class="spinner-border  text-info" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </span>
+            <span *ngIf="!cityLoader">
+              <a (click)="setCity(city.City)" *ngFor="let city of cities "  class="cityItem text-info">{{city.City}}</a>
+            </span>
+          </div>
+      </div>
+    </div>
+    <div class="col col-lg-6">
+      <iframe width="500" height="500" frameborder="0" style="border:0" id="mapSrc" allowfullscreen></iframe>
+    </div>
+    <p id="warningMessage">
+      <ngb-alert  *ngIf="stateWarning" type="danger" (close)="stateWarning = ''">{{stateWarning}}</ngb-alert>
+    </p>
+  </div>
+</div>
